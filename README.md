@@ -1,4 +1,2 @@
 # gitops
 GitOps Project
-
-Tools :
