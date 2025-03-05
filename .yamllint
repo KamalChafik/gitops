@@ -5,6 +5,7 @@ rules:
   indentation:
     spaces: 2
     indent-sequences: false
+    level: warning
 
   line-length:
     max: 200
