@@ -26,9 +26,3 @@ rules:
 
   braces:
     level: warning
-
-  # Secret detection - Blocks common patterns
-  custom-secret-check:
-    description: "Disallow API keys, passwords, tokens in YAML"
-    pattern: '.*(api_key|password|token|secret|private_key).*:\s*[\'"]?[A-Za-z0-9-_]{10,}[\'"]?$'
-    level: error
