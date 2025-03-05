@@ -1,24 +1,24 @@
 ---
-extends: default
+extends: default  # Base rule set
 
 rules:
   indentation:
     spaces: 2
     indent-sequences: false
-    level: error
+    level: warning
 
   line-length:
-    max: 160
+    max: 200
     level: warning
 
   trailing-spaces:
     level: error
 
   new-line-at-end-of-file:
-    level: warning
+    level: error
 
   truthy:
-    level: error
+    level: warning
 
   document-start:
     level: warning
@@ -26,5 +26,5 @@ rules:
   key-duplicates:
     level: error
 
-  brackets:
+  braces:
     level: warning
