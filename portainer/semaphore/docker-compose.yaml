@@ -6,3 +6,9 @@ services:
     image: semaphoreui/semaphore:latest
     environment:
       SEMAPHORE_DB_DIALECT: bolt
+    volumes:
+      - semaphore_data:/var/lib/semaphore
+      - semaphore_config:/etc/semaphore
+volumes:
+    semaphore_data:
+    semaphore_config:
