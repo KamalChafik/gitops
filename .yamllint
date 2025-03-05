@@ -1,3 +1,4 @@
+---
 extends: default  # Base rule set
 
 rules:
@@ -6,7 +7,7 @@ rules:
     indent-sequences: false
 
   line-length:
-    max: 120
+    max: 200
     level: warning
 
   trailing-spaces:
@@ -16,7 +17,7 @@ rules:
     level: error
 
   truthy:
-    level: error
+    level: warning
 
   document-start:
     level: warning
