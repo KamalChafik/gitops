@@ -1,0 +1,34 @@
+extends: default  # Base rule set
+
+rules:
+  indentation:
+    spaces: 2
+    indent-sequences: false
+
+  line-length:
+    max: 120
+    level: warning
+
+  trailing-spaces:
+    level: error
+
+  new-line-at-end-of-file:
+    level: error
+
+  truthy:
+    level: error
+
+  document-start:
+    level: warning
+
+  key-duplicates:
+    level: error
+
+  braces:
+    level: warning
+
+  # Secret detection - Blocks common patterns
+  custom-secret-check:
+    description: "Disallow API keys, passwords, tokens in YAML"
+    pattern: '.*(api_key|password|token|secret|private_key).*:\s*[\'"]?[A-Za-z0-9-_]{10,}[\'"]?$'
+    level: error
