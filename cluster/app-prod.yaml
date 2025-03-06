@@ -5,10 +5,9 @@ metadata:
   name: app-prod
   namespace: flux-system
 spec:
-  interval: 60s
+  interval: 1m
   sourceRef:
     kind: GitRepository
     name: flux-system
-  path: ./app/prod
+  path: ./cluster/prod
   prune: true
-  wait: true
