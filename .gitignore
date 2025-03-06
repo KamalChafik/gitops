@@ -23,5 +23,5 @@ build/
 .vscode/
 .idea/
 *.iml
-
+*kubeconfig.yaml
 mynotes.md
