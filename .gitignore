@@ -6,6 +6,7 @@ node_modules/
 
 # Ignore environment variable files
 .env
+prod.env
 .env.local
 .env.development.local
 .env.test.local
@@ -22,3 +23,5 @@ build/
 .vscode/
 .idea/
 *.iml
+
+mynotes.md
