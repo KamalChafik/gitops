@@ -5,4 +5,3 @@ namespace: prod
 resources:
   - helmrelease.yaml
   - helmrepository.yaml
- 
