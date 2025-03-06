@@ -8,7 +8,7 @@ metadata:
 spec:
   interval: 1m0s
   ref:
-    branch: main
+    branch: deploy-podinfo
   secretRef:
     name: flux-system
   url: https://github.com/KamalChafik/gitops.git
