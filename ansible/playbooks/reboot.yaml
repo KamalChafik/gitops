@@ -1,6 +1,6 @@
 ---
 - name: Reboot machine
-  hosts: "{{ my_hosts | default('all') }}"
+  hosts: "{{ my_hosts | d([]) }}"
   become: true
 
   tasks:
