@@ -1,15 +1,43 @@
 ---
+volumes:
+  semaphore-mysql:
+    driver: local
 services:
+  mysql:
+    image: docker.io/library/mysql:8.4
+    hostname: mysql
+    volumes:
+      - semaphore-mysql:/var/lib/mysql
+    environment:
+      - MYSQL_RANDOM_ROOT_PASSWORD=yes
+      - MYSQL_DATABASE=semaphore
+      - MYSQL_USER=semaphore
+      - MYSQL_PASSWORD=secret-password  # change!
+    restart: unless-stopped
   semaphore:
+    container_name: semaphore
+    image: docker.io/semaphoreui/semaphore:v2.12.14
+    user: "${UID}:${GID}"
     ports:
       - 3000:3000
-    image: semaphoreui/semaphore:latest
     environment:
-      SEMAPHORE_DB_DIALECT: bolt
+      - SEMAPHORE_DB_USER=semaphore
+      - SEMAPHORE_DB_PASS=secret-password 
+      - SEMAPHORE_DB_HOST=mysql
+      - SEMAPHORE_DB_PORT=3306
+      - SEMAPHORE_DB_DIALECT=mysql
+      - SEMAPHORE_DB=semaphore
+      - SEMAPHORE_PLAYBOOK_PATH=/tmp/semaphore/
+      - SEMAPHORE_ADMIN_PASSWORD=secret-admin-password
+      - SEMAPHORE_ADMIN_NAME=admin
+      - SEMAPHORE_ADMIN_EMAIL=admin@localhost
+      - SEMAPHORE_ADMIN=admin
+      - SEMAPHORE_ACCESS_KEY_ENCRYPTION= 
+      - ANSIBLE_HOST_KEY_CHECKING=false
     volumes:
-      - semaphore_data:/var/lib/semaphore
-      - semaphore_config:/etc/semaphore
-volumes:
-    semaphore_data:
-    semaphore_config:
-
+      - ./inventory/:/inventory:ro
+      - ./authorized-keys/:/authorized-keys:ro
+      - ./config/:/etc/semaphore:rw
+    restart: unless-stopped
+    depends_on:
+      - mysql
