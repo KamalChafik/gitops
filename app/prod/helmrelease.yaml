@@ -15,5 +15,6 @@ spec:
         namespace: prod
   interval: 10m
   values:
+    replicaCount: 3
     ui:
-      coloe: "#4f00a3"
+      color: "#4f00a3"
