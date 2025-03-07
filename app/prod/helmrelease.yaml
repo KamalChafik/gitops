@@ -1,5 +1,5 @@
 ---
-apiVersion: helm.toolkit.fluxcd.io/v1beta1
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: podinfo
@@ -15,5 +15,6 @@ spec:
         namespace: prod
   interval: 10m
   values:
+    replicaCount: 3
     ui:
-      coloe: "#4f00a3"
+      color: "#008000"
