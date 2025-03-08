@@ -9,12 +9,12 @@ spec:
   chart:
     spec:
       chart: podinfo
+      version: 6.7.x
       sourceRef:
         kind: HelmRepository
         name: podinfo
         namespace: prod
   interval: 1h
-  version: 6.7.1
   values:
     replicaCount: 3
     ui:
