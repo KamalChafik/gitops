@@ -1,14 +1,14 @@
 ---
 extends: default  # Base rule set
 
+ignore: |
+  cluster/prod/traefik-crds.yaml
+
 rules:
   indentation:
     spaces: 2
     indent-sequences: false
     level: warning
-
-  ignore: |
-    cluster/prod/traefik-crds.yaml
 
   line-length:
     max: 200
@@ -21,6 +21,7 @@ rules:
     level: error
     comments:
       level: warning
+
   truthy:
     level: warning
 
