@@ -4,6 +4,7 @@ kind: Kustomization
 resources:
   - ../base/podinfo
   - ../base/traefik
+  - traefik-crds.yaml
   - traefik-namespace.yaml
   - traefik-helmrelease.yaml
   - traefik-ingressroute.yaml
