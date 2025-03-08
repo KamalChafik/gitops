@@ -16,7 +16,8 @@ rules:
 
   new-line-at-end-of-file:
     level: error
-
+    comments:
+      level: warning
   truthy:
     level: warning
 
@@ -28,3 +29,6 @@ rules:
 
   braces:
     level: warning
+
+ignore: |
+  cluster/prod/traefik-crds.yaml
