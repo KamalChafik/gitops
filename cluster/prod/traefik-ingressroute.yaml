@@ -8,7 +8,7 @@ spec:
   entryPoints:
     - web
   routes:
-    - match: "Host(`traefik.example.com`)"
+    - match: "Host(`traefik.local`)"
       kind: Rule
       middlewares: []
       services:

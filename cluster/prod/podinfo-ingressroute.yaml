@@ -8,8 +8,8 @@ spec:
   entryPoints:
     - web
   routes:
-    - match: "Host(`podinfo.example.com`)"
+    - match: "Host(`podinfo.local`)"
       kind: Rule
       services:
         - name: podinfo
-          port: 9898"
+          port: 9898
