@@ -5,6 +5,15 @@ metadata:
   name: traefik
   namespace: traefik-system
 spec:
+  intervail: 1h
+  chart:
+    spec:
+      chart: traefik
+      version: 34.4.x
+      sourceRef:
+        kind: HelmRepository
+        name: traefik
+        namespace: traefik-system
   values:
     service:
       type: NodePort
