@@ -5,7 +5,6 @@ metadata:
   name: traefik
   namespace: traefik-system
 spec:
-  intervail: 1h
   chart:
     spec:
       chart: traefik
@@ -14,6 +13,7 @@ spec:
         kind: HelmRepository
         name: traefik
         namespace: traefik-system
+  interval: 1h
   values:
     service:
       type: NodePort
