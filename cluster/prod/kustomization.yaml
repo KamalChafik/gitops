@@ -9,3 +9,4 @@ resources:
   - traefik-ingressroute.yaml
   - podinfo-namespace.yaml
   - podinfo-helmrelease.yaml
+  - podinfo-ingressroute.yaml

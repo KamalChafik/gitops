@@ -8,7 +8,7 @@ metadata:
 spec:
   interval: 1m0s
   ref:
-    branch: helm-structure-fix
+    branch: main
   secretRef:
     name: flux-system
   url: https://github.com/KamalChafik/gitops.git
