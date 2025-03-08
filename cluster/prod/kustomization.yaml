@@ -5,8 +5,8 @@ resources:
   - ../../app
   - traefik-crds.yaml
   - traefik-namespace.yaml
-  - traefik-helmrelease.yaml
   - podinfo-namespace.yaml
+  - traefik-helmrelease.yaml
   - podinfo-helmrelease.yaml
   - traefik-ingressroute.yaml
   - podinfo-ingressroute.yaml
