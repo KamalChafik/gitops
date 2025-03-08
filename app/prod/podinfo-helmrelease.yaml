@@ -14,7 +14,8 @@ spec:
         name: podinfo
         namespace: prod
   interval: 1h
+  version: 6.7.x
   values:
     replicaCount: 3
     ui:
-      color: "#008000"
+      color: "#0000FF"
