@@ -7,6 +7,9 @@ rules:
     indent-sequences: false
     level: warning
 
+  ignore: |
+    cluster/prod/traefik-crds.yaml
+
   line-length:
     max: 200
     level: warning
@@ -29,6 +32,3 @@ rules:
 
   braces:
     level: warning
-
-ignore: |
-  cluster/prod/traefik-crds.yaml
