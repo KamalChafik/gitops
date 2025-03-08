@@ -18,7 +18,7 @@ rules:
     level: error
 
   new-line-at-end-of-file:
-    level: error 
+    level: error
 
   truthy:
     level: warning
