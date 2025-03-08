@@ -13,7 +13,7 @@ spec:
         kind: HelmRepository
         name: podinfo
         namespace: prod
-  interval: 10m
+  interval: 1h
   values:
     replicaCount: 3
     ui:
