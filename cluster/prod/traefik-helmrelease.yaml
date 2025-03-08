@@ -15,7 +15,6 @@ spec:
         name: traefik
         namespace: flux-system
   values:
-    replicaCount: 3
     crds:
       enabled: true
     ingressRoute:
