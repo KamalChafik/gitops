@@ -22,7 +22,7 @@ spec:
         enabled: true
     service:
       type: LoadBalancer
-      loadBalancerIP: 
+      loadBalancerIP:
         valueFrom:
           secretKeyRef:
             name: traefik-external-ip
