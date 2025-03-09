@@ -144,13 +144,6 @@ Contains monitoring and logging tools.
 
 To ensure high code quality and maintain consistency, **YAML files are linted using `yamllint`** before deployment. This helps catch misconfigurations and enforce best practices.
 
-### **Running `yamllint` Locally**
-To manually check your YAML files:
-```sh
-pip install yamllint  # Install yamllint if not already installed
-yamllint .  # Run yamllint on all YAML files in the repository
-```
-
 ### **Automated Linting in CI/CD**
 - `yamllint` is integrated into the CI/CD pipeline to prevent misconfigured YAML files from being deployed.
 - Linting is performed on all `.yaml` and `.yml` files before merging changes into the main branch.
@@ -159,7 +152,7 @@ yamllint .  # Run yamllint on all YAML files in the repository
 
 This project was developed with the primary goal of **storing infrastructure and configuration in Git**, automating as much as possible.
 
-- The **only configuration not stored in Git** is **Portainer’s `docker-compose.yaml`**, as it contains secrets.
+- The **only configuration not stored in Git** is **Portainer’s `docker-compose.yaml`** .env, as it contains secrets. (a sample.env was given for example)
 - **TLS is not configured with Traefik**, as it was not within the project scope. However, it can be easily added later (possibly with **DuckDNS**).
 
 ---
