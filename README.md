@@ -2,18 +2,18 @@
 
 ## 📖 Table of Contents
 
-- [Overview](#overview)
-  - [💻 Machines & Hardware](#machines--hardware)
-  - [🔧 Services](#services)
-  - [🎨 Design](#design)
-- [Project Structure](#project-structure)
-  - [🔧 Ansible](#ansible)
-  - [🚀 Applications (`app/`)](#applications-app)
-  - [🌍 Cluster Configuration (`cluster/`)](#cluster-configuration-cluster)
-  - [📦 Portainer Stack (`portainer/`)](#portainer-stack-portainer)
-- [🔗 Notes and Disclaimers](#notes-and-disclaimers)
-- [💡 Contributing & Advice](#contributing--advice)
-- [📄 License](#license)
+- [Overview](#-overview)
+  - [💻 Machines & Hardware](#-machines--hardware)
+  - [🔧 Services](#-services)
+  - [🎨 Design](#-design)
+- [Project Structure](-#project-structure)
+  - [🔧 Ansible](#-ansible)
+  - [🚀 Applications (`app/`)](#-applications-app)
+  - [🌍 Cluster Configuration (`cluster/`)](#-cluster-configuration-cluster)
+  - [📦 Portainer Stack (`portainer/`)](#-portainer-stack-portainer)
+- [🔗 Notes and Disclaimers](#-notes-and-disclaimers)
+- [💡 Contributing & Advice](#-contributing--advice)
+- [📄 License](#-license)
 
 ---
 
