@@ -15,14 +15,20 @@ spec:
         name: traefik
         namespace: flux-system
   values:
-    replicaCount: 3
+    crds:
+      enabled: true
     ingressRoute:
       dashboard:
         enabled: true
     service:
-      type: NodePort
+      type: LoadBalancer
+      loadBalancerIP:
+        valueFrom:
+          secretKeyRef:
+            name: traefik-external-ip
+            key: EXTERNAL_IP
     ports:
       web:
-        nodePort: 30080
+        port: 80
       websecure:
         enabled: false
