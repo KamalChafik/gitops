@@ -1,6 +1,6 @@
 variable "cluster_name" {
   type    = string
-  default = "my-lke-cluster"
+  default = "lke-cluster"
 }
 
 variable "region" {
