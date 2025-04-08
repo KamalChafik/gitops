@@ -6,7 +6,7 @@ metadata:
 spec:
   entryPoints:
     - web
-  routes: 
+  routes:
     - match: "Host(`flux-source.local`) && Path(`/metrics`)"
       kind: Rule
       services:
