@@ -26,5 +26,4 @@ scrape_configs:
         regex: flux
     metrics_path: /metrics
     scheme: http
-    port: 8080
     scrape_interval: 30s
