@@ -1,0 +1,13 @@
+---
+- name: Upload Prometheus configurations
+  hosts: all
+  become: true
+
+  tasks:
+    - name: Copy prometheus.yml to VM
+      copy:
+        src: portainer/monitoring/prometheus.yml
+        dest: /opt/monitoring/prometheus.yml
+        owner: root
+        group: root
+        mode: '0644'
