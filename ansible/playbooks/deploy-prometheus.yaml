@@ -6,7 +6,7 @@
   tasks:
     - name: Copy prometheus.yml to VM
       copy:
-        src: ../portainer/monitoring/prometheus.yml
+        src: ../../portainer/monitoring/prometheus.yml
         dest: /opt/monitoring/prometheus.yml
         owner: root
         group: root
