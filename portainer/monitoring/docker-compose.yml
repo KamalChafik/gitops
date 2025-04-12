@@ -49,8 +49,6 @@ services:
       - /opt/monitoring/loki/data:/loki
     networks:
       - monitoring
-    depends_on:
-      - grafana
     restart: unless-stopped
 
 networks:
