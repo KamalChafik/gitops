@@ -14,16 +14,16 @@ scrape_configs:
     static_configs:
       - targets: ['podinfo.local']
 
-  # - job_name: flux
-  #   kubernetes_sd_configs:
-  #     - role: pod
-  #       namespaces:
-  #         names:
-  #           - flux-system
-  #   relabel_configs:
-  #     - source_labels: [__meta_kubernetes_pod_label_app_kubernetes_io_name]
-  #       action: keep
-  #       regex: flux
-  #   metrics_path: /metrics
-  #   scheme: http
-  #   scrape_interval: 30s
+  - job_name: flux
+    kubernetes_sd_configs:
+      - role: pod
+        namespaces:
+          names:
+            - flux-system
+    relabel_configs:
+      - source_labels: [__meta_kubernetes_pod_label_app_kubernetes_io_name]
+        action: keep
+        regex: flux
+    metrics_path: /metrics
+    scheme: http
+
