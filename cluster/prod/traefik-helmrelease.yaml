@@ -32,3 +32,14 @@ spec:
         port: 80
       websecure:
         enabled: false
+    logs:
+      general:
+        level: DEBUG
+        format: json
+      access:
+        enabled: true
+        format: json  
+
+    additionalArguments:
+      - "--log.format=json"
+      - "--accesslog.format=json"
