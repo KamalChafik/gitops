@@ -13,7 +13,7 @@ services:
       - monitoring
     environment:
       - UPTIME_KUMA_USER=${UPTIME_KUMA_USER}
-      - UPTIME_KUMA_USER=${UPTIME_KUMA_USER}
+      - UPTIME_KUMA_PASSWORD=${UPTIME_KUMA_PASSWORD}
 
   grafana:
     image: grafana/grafana
