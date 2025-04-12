@@ -4,7 +4,7 @@ kind: Kustomization
 resources:
 - gotk-components.yaml
 - gotk-sync.yaml
-- notifications/discord-provider.yaml
-- notifications/discord-webhook-secret.yaml
-- notifications/flux-alert.yaml
+# - notifications/discord-provider.yaml
+# - notifications/discord-webhook-secret.yaml
+# - notifications/flux-alert.yaml
 - source-metrics-ingressroute.yaml
