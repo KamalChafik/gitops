@@ -23,7 +23,7 @@ spec:
       positions:
         filename: /run/promtail/positions.yaml
       clients:
-        - url: "http://<YOUR-LOKI-HOST>:3100/loki/api/v1/push"
+        - url: "http://172.105.98.128:3100/loki/api/v1/push"
       # Each 'scrape_configs' entry is a separate "job" for Promtail.
       # We only keep logs from specific namespaces/pods we care about:
       scrape_configs:
