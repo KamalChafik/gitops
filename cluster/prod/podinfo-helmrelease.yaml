@@ -19,3 +19,4 @@ spec:
     replicaCount: 3
     ui:
       color: "#0000FF"
+    logLevel: "info"
