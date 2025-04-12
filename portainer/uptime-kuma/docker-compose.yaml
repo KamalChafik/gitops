@@ -3,13 +3,9 @@ services:
   uptime-kuma:
     image: louislam/uptime-kuma:1.23.15
     volumes:
-      - uptime-kuma-data:/app/data
+      - ./kuma/data:/app/data
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - /etc/hosts:/etc/hosts:ro
     ports:
       - 3001:3001
     restart: unless-stopped
-
-volumes:
-  uptime-kuma-data:
-    name: uptime-kuma-data
