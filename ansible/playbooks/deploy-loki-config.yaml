@@ -1,0 +1,12 @@
+- name: Upload Loki configurations
+  hosts: all
+  become: true
+
+  tasks:
+    - name: Copy loki config.yaml to VM
+      copy:
+        src: ../../portainer/monitoring/config.yaml
+        dest: /opt/monitoring/loki/config.yaml
+        owner: root
+        group: root
+        mode: '0644'

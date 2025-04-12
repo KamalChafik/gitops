@@ -38,7 +38,7 @@ spec:
         format: json
       access:
         enabled: true
-        format: json  
+        format: json
 
     additionalArguments:
       - "--log.format=json"
