@@ -11,9 +11,9 @@ services:
       - "9090:9090"
     networks:
       - monitoring
-    environment:
-      - UPTIME_KUMA_USER=${UPTIME_KUMA_USER}
-      - UPTIME_KUMA_PASSWORD=${UPTIME_KUMA_PASSWORD}
+    # secrets:
+    #   - uptime_kuma_user
+    #   - uptime_kuma_password
 
   grafana:
     image: grafana/grafana
