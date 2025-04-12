@@ -1,0 +1,103 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: promtail
+  namespace: promtail
+spec:
+  releaseName: promtail
+  chart:
+    spec:
+      chart: promtail
+      version: 6.10.0
+      sourceRef:
+        kind: HelmRepository
+        name: promtail
+        namespace: flux-system
+  interval: 5m
+  values:
+    mode: "daemonSet"
+    config:
+      server:
+        logLevel: info
+      positions:
+        filename: /run/promtail/positions.yaml
+      clients:
+        - url: "http://<YOUR-LOKI-HOST>:3100/loki/api/v1/push"
+      # Each 'scrape_configs' entry is a separate "job" for Promtail.
+      # We only keep logs from specific namespaces/pods we care about:
+      scrape_configs:
+
+        # --- FLUX ---
+        - job_name: "flux"
+          kubernetes_sd_configs:
+            - role: pod
+          relabel_configs:
+            # Only keep pods in the flux-system namespace
+            - source_labels: [__meta_kubernetes_namespace]
+              action: keep
+              regex: flux-system
+
+            # Rename built-in metadata labels to simpler labels
+            - source_labels: [__meta_kubernetes_namespace]
+              target_label: namespace
+            - source_labels: [__meta_kubernetes_pod_name]
+              target_label: pod
+            - source_labels: [__meta_kubernetes_pod_container_name]
+              target_label: container
+
+            # Drop the "POD" placeholder containers
+            - source_labels: [__meta_kubernetes_pod_container_name]
+              action: drop
+              regex: ".*POD.*"
+
+        # --- PODINFO ---
+        - job_name: "podinfo"
+          kubernetes_sd_configs:
+            - role: pod
+          relabel_configs:
+            # Only keep pods in the 'prod' namespace
+            - source_labels: [__meta_kubernetes_namespace]
+              action: keep
+              regex: prod
+
+            # Only keep pods whose name starts with "podinfo-"
+            - source_labels: [__meta_kubernetes_pod_name]
+              action: keep
+              regex: "podinfo-.*"
+
+            # Relabel standard K8s metadata to simpler labels
+            - source_labels: [__meta_kubernetes_namespace]
+              target_label: namespace
+            - source_labels: [__meta_kubernetes_pod_name]
+              target_label: pod
+            - source_labels: [__meta_kubernetes_pod_container_name]
+              target_label: container
+
+            # Drop placeholder containers
+            - source_labels: [__meta_kubernetes_pod_container_name]
+              action: drop
+              regex: ".*POD.*"
+
+        # --- TRAEFIK ---
+        - job_name: "traefik"
+          kubernetes_sd_configs:
+            - role: pod
+          relabel_configs:
+            # Only keep pods in the traefik-system namespace
+            - source_labels: [__meta_kubernetes_namespace]
+              action: keep
+              regex: traefik-system
+
+            # Relabel standard K8s metadata
+            - source_labels: [__meta_kubernetes_namespace]
+              target_label: namespace
+            - source_labels: [__meta_kubernetes_pod_name]
+              target_label: pod
+            - source_labels: [__meta_kubernetes_pod_container_name]
+              target_label: container
+
+            # Drop placeholder containers
+            - source_labels: [__meta_kubernetes_pod_container_name]
+              action: drop
+              regex: ".*POD.*"

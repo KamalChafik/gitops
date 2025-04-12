@@ -6,7 +6,9 @@ resources:
   # - traefik-crds.yaml
   - traefik-namespace.yaml
   - podinfo-namespace.yaml
+  - promtail-namespace.yaml
   - traefik-helmrelease.yaml
   - podinfo-helmrelease.yaml
+  - promtail-helmrelease.yaml
   - traefik-ingressroute.yaml
   - podinfo-ingressroute.yaml
