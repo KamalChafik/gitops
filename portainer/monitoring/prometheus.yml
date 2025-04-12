@@ -10,6 +10,10 @@ scrape_configs:
     static_configs:
       - targets: ['grafana:3000']
 
+  - job_name: uptime-kuma
+    static_configs:
+      - targets: ['uptime-kuma:3001']
+
   - job_name: podinfo
     static_configs:
       - targets: ['podinfo.local']
