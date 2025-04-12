@@ -7,4 +7,4 @@ resources:
 # - notifications/discord-provider.yaml
 # - notifications/discord-webhook-secret.yaml
 # - notifications/flux-alert.yaml
-- source-metrics-ingressroute.yaml
+# - source-metrics-ingressroute.yaml
