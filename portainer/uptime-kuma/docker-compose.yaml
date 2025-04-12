@@ -5,7 +5,7 @@ services:
     volumes:
       - ./kuma/data:/app/data
       - /var/run/docker.sock:/var/run/docker.sock:ro
-      - /etc/hosts:/etc/hosts:ro
+      # - /etc/hosts:/etc/hosts:ro
     ports:
       - 3001:3001
     restart: unless-stopped
