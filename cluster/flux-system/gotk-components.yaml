@@ -4831,6 +4831,10 @@ spec:
     port: 80
     protocol: TCP
     targetPort: http
+  - name: metrics
+    port: 8080
+    protocol: TCP
+    targetPort: 8080
   selector:
     app: source-controller
   type: ClusterIP
