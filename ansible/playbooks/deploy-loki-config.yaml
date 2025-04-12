@@ -6,7 +6,7 @@
     - name: Copy loki config.yaml to VM
       copy:
         src: ../../portainer/monitoring/config.yaml
-        dest: /opt/monitoring/loki/config.yaml
+        dest: /mnt/config/config.yaml
         owner: root
         group: root
         mode: '0644'
