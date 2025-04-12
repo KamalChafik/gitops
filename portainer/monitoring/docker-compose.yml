@@ -33,6 +33,8 @@ services:
       - /etc/hosts:/etc/hosts:ro
     ports:
       - 3001:3001
+    networks:
+      - monitoring
     restart: unless-stopped
 
 networks:

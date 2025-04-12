@@ -21,4 +21,3 @@ scrape_configs:
   - job_name: flux
     static_configs:
       - targets: ['flux-source.local']
-
