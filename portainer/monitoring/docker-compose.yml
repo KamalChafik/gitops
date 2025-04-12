@@ -11,6 +11,9 @@ services:
       - "9090:9090"
     networks:
       - monitoring
+    environment:
+      - UPTIME_KUMA_USER=${UPTIME_KUMA_USER}
+      - UPTIME_KUMA_USER=${UPTIME_KUMA_USER}
 
   grafana:
     image: grafana/grafana
