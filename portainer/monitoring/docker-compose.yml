@@ -45,9 +45,9 @@ services:
     ports:
       - "3100:3100"
     volumes:
-      - /opt/monitoring/loki/config.yaml:/etc/loki/config.yaml:ro
+      - /opt/monitoring/loki/config.yaml:/mnt/config/config.yaml:ro
       - /opt/monitoring/loki/data:/loki
-    command: -config.file=/etc/loki/config.yaml
+    command: -config.file=/mnt/config/config.yaml
     networks:
       - monitoring
     depends_on:
