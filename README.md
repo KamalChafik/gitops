@@ -1,27 +1,27 @@
-# 📌 Flux GitOps Project
+# Flux GitOps Project
 
-## 📖 Table of Contents
+## Table of Contents
 
-- [Overview](#-overview)
-  - [💻 Machines & Hardware](#-machines--hardware)
-  - [🔧 Services](#-services)
-  - [🎨 Design](#-design)
-- [Project Structure](-#project-structure)
-  - [🔧 Ansible](#-ansible)
-  - [🚀 Applications (`app/`)](#-applications-app)
-  - [🌍 Cluster Configuration (`cluster/`)](#-cluster-configuration-cluster)
-  - [📦 Portainer Stack (`portainer/`)](#-portainer-stack-portainer)
-- [🔗 Notes and Disclaimers](#-notes-and-disclaimers)
-- [💡 Contributing & Advice](#-contributing--advice)
-- [📄 License](#-license)
+- [Overview](#overview)
+  - [Machines & Hardware](#machines--hardware)
+  - [Services](#services)
+  - [Design](#design)
+- [Project Structure](#project-structure)
+  - [Ansible](#ansible)
+  - [Applications (`app/`)](#applications-app)
+  - [Cluster Configuration (`cluster/`)](#cluster-configuration-cluster)
+  - [Portainer Stack (`portainer/`)](#portainer-stack-portainer)
+- [Notes and Disclaimers](#notes-and-disclaimers)
+- [Contributing & Advice](#contributing--advice)
+- [License](#license)
 
 ---
 
-## 📝 Overview
+## Overview
 
 This project is a **GitOps-driven Kubernetes setup** using **FluxCD** to manage infrastructure and applications. It integrates automated deployments, monitoring, logging, and follows Infrastructure as Code (IaC) best practices to ensure **reliability, scalability, and maintainability**.
 
-### 💻 **Machines & Hardware**
+### Machines & Hardware
 
 This project runs on **Linode Kubernetes Engine (LKE)** with a **3-node Kubernetes cluster** and a separate **Ubuntu VM** for infrastructure management.
 
@@ -30,139 +30,125 @@ This project runs on **Linode Kubernetes Engine (LKE)** with a **3-node Kubernet
 
 - **Ubuntu VM**
   - Used for **monitoring, provisioning infrastructure, and cluster configuration**.
-  - Hosts **Portainer** for deploying and managing services. (GitOps mode)
+  - Hosts **Portainer** in **GitOps mode** for service deployment, along with the full monitoring stack.
 
-### 🔧 **Services**
+### Services
 
-#### **Kubernetes Cluster (LKE - 3 Nodes)**
+#### Kubernetes Cluster (LKE - 3 Nodes)
 
 - **FluxCD** – GitOps-based Kubernetes deployment automation.
 - **Helm** – Package management for Kubernetes applications.
 - **ITOps** – Infrastructure management through automation.
 - **Traefik** – Ingress controller for managing external traffic.
 - **Podinfo** – Example application for testing deployments.
-- **Prometheus & Grafana** – Monitoring and metrics visualization (**In Progress**).
-- **Loki** – Centralized logging solution (**In Progress**).
-- **Discord Notifications** – Real-time updates for GitOps events (**In Progress**).
+- **Discord Notifications** – Real-time updates for GitOps events (In Progress).
+- **Promtail** – Deployed in the cluster, collects logs from **Flux**, **Podinfo**, and **Traefik**, and forwards them to Loki.
 
-#### **Ubuntu VM**
+#### Ubuntu VM (Monitoring & IaC)
 
 - **OpenTofu** – Open-source alternative to Terraform.
-- **Ansible** – Configuration management and automation.
-- **Portainer** – Container management and deployment in **GitOps mode** with the repository linked.
-- **Gatus** – Automated uptime monitoring (**In Progress**).
-- **Semaphore** – CI/CD pipeline management with UI for **Ansible and OpenTofu**.
-
-### 🎨 **Design**
-
-This system follows best practices in **GitOps and Infrastructure as Code (IaC)**:
-
-- **Declarative Configuration** – Every deployment and configuration is defined in Git.
-- **Immutable Infrastructure** – Updates are applied via GitOps rather than manual intervention.
-- **Scalability & High Availability** – Services are distributed across multiple nodes for redundancy.
-- **Security & Observability** – Logging, monitoring, and alerting are integrated for complete visibility.
+- **Ansible** – Configuration management and automation (syncs config files from Git).
+- **Portainer** – Service deployment in **GitOps mode** using a linked repository.
+- **Semaphore** – UI for managing Ansible playbooks and OpenTofu pipelines.
+- **Grafana** – Metrics and logs dashboard.
+- **Prometheus** – Metrics collection and alerting.
+- **Loki** – Log aggregation backend that receives logs from the Kubernetes cluster.
+- **Uptime Kuma** – Availability monitoring for services with 60s alert threshold.
 
 ---
 
-## 📂 Project Structure
+## Project Structure
 
-### 🔧 **Ansible** (`ansible/playbooks/`)
+### Ansible (`ansible/playbooks/`)
 
-Contains Ansible playbooks for managing system updates and reboots. The goal is to **automate infrastructure provisioning**, but for now, it focuses on **maintenance tasks**.
+Contains playbooks to manage and automate tasks related to infrastructure updates, reboots, and syncing config files from Git.
 
-| File                | Description                                                               |
-| ------------------- | ------------------------------------------------------------------------- |
-| `check-reboot.yaml` | Checks if a system reboot is required (**Discord notification in progress**). |
-| `reboot.yaml`       | Reboots the system if needed.                                             |
-| `update.yaml`       | Updates system packages and security patches.                             |
-
----
-
-### 🚀 **Applications (`app/`)**
-
-Contains Helm repositories and Kustomize configurations for deployed applications.
-
-| Directory          | Description                                                           |
-| ------------------ | --------------------------------------------------------------------- |
-| `base/podinfo/`   | Helm repository and Kustomization for **Podinfo** service.            |
-| `base/traefik/`   | Helm repository and Kustomization for **Traefik** Ingress Controller. |
-| `kustomization.yaml` | Manages application deployments via Kustomize.                        |
+| File                        | Description                                                                 |
+| --------------------------- | --------------------------------------------------------------------------- |
+| `check-reboot.yaml`         | Checks if a system reboot is required.                                      |
+| `reboot.yaml`               | Reboots the system if needed.                                               |
+| `update.yaml`               | Updates system packages and security patches.                               |
+| `deploy-prometheus.yaml`    | Deploys or syncs the Prometheus configuration files from the Git repo.      |
+| `deploy-loki-config.yaml`   | Deploys Loki's configuration (`config.yaml`) from Git to the VM.            |
 
 ---
 
-### 🌍 **Cluster Configuration (`cluster/`)**
+### Applications (`app/`)
 
-Manages **FluxCD system components**, namespaces, and production/staging environments.
+Contains Helm repositories and Kustomize configurations for all applications deployed in the cluster.
 
-#### **🔹 Flux System (`cluster/flux-system/`)**
+| Directory         | Description                                                               |
+| ----------------- | ------------------------------------------------------------------------- |
+| `base/podinfo/`   | Helm repo and kustomization for the **Podinfo** service.                  |
+| `base/traefik/`   | Helm repo and kustomization for **Traefik** ingress controller.           |
+| `base/promtail/`  | Helm repo and kustomization for **Promtail**, the log forwarder.          |
+| `kustomization.yaml` | Kustomize root for base application deployment configs.                |
+
+---
+
+### Cluster Configuration (`cluster/`)
+
+FluxCD configuration for managing environments, namespaces, applications, and alerts.
+
+#### Flux System (`cluster/flux-system/`)
 
 | File                   | Description                                    |
 | ---------------------- | ---------------------------------------------- |
-| `gotk-components.yaml` | FluxCD core components.                        |
-| `gotk-sync.yaml`       | Sync configuration for FluxCD.                 |
-| `kustomization.yaml`   | Kustomize settings for managing cluster state. |
+| `gotk-components.yaml` | Core FluxCD components.                        |
+| `gotk-sync.yaml`       | Git repository sync configuration.             |
+| `kustomization.yaml`   | Manages the overall state of the cluster.      |
 
-#### **🔹 Notifications (`cluster/flux-system/notifications/`)**
+#### Notifications (`cluster/flux-system/notifications/`)
 
 | File                          | Description                                 |
 | ----------------------------- | ------------------------------------------- |
-| `discord-provider.yaml`       | Defines Discord as a notification provider. |
-| `discord-webhook-secret.yaml` | Stores the Discord webhook URL as a secret. |
-| `flux-alert.yaml`             | Configures alerts for FluxCD events.        |
+| `discord-provider.yaml`       | Defines Discord as an alerting provider.    |
+| `discord-webhook-secret.yaml` | Secret storing the webhook URL.             |
+| `flux-alert.yaml`             | Configures alerts for GitOps activity.      |
 
-#### **🔹 Production (`cluster/prod/`)**
+#### Production Environment (`cluster/prod/`)
 
-| File                        | Description                                     |
-| --------------------------- | ----------------------------------------------- |
-| `kustomization.yaml`        | Defines production-specific Kustomizations.     |
-| `podinfo-helmrelease.yaml`  | HelmRelease for **Podinfo** app.                |
-| `podinfo-ingressroute.yaml` | IngressRoute for **Podinfo** service.           |
-| `traefik-helmrelease.yaml`  | HelmRelease for **Traefik** Ingress Controller. |
-| `traefik-ingressroute.yaml` | IngressRoute for **Traefik**.                   |
-
-#### **🔹 Staging (`cluster/staging/`)**
-
-Placeholder for staging environment configurations.
-
----
-
-### 📦 **Portainer Stack (`portainer/`)**
-
-Contains monitoring and logging tools.
-
-| Directory     | Description                         |
-| ------------- | ----------------------------------- |
-| `gatus/`      | Service uptime monitoring.          |
-| `grafana/`    | Dashboards for visualizing metrics. |
-| `loki/`       | Centralized logging system.         |
-| `prometheus/` | Metrics collection and alerting.    |
-| `semaphore/`  | UI for **Ansible and OpenTofu**.    |
+| File                         | Description                                           |
+| ---------------------------- | ----------------------------------------------------- |
+| `kustomization.yaml`         | Aggregates all production-specific resources.         |
+| `podinfo-namespace.yaml`     | Namespace definition for Podinfo.                     |
+| `podinfo-helmrelease.yaml`   | HelmRelease for deploying Podinfo.                    |
+| `podinfo-ingressroute.yaml`  | Traefik ingress for Podinfo.                          |
+| `traefik-namespace.yaml`     | Namespace for Traefik.                                |
+| `traefik-helmrelease.yaml`   | HelmRelease for Traefik ingress controller.           |
+| `traefik-ingressroute.yaml`  | Traefik ingress configuration.                        |
+| `promtail-namespace.yaml`    | Namespace for Promtail.                               |
+| `promtail-helmrelease.yaml`  | HelmRelease for Promtail (for log forwarding to Loki).|
 
 ---
 
-## 📊 **Code Quality & Linting**
+### Portainer Stack (`portainer/`)
 
-To ensure high code quality and maintain consistency, **YAML files are linted using `yamllint`** before deployment. This helps catch misconfigurations and enforce best practices.
+Services deployed via **Portainer in GitOps mode**, focused on monitoring and CI/CD.
 
-### **Automated Linting in CI/CD**
-- `yamllint` is integrated into the CI/CD pipeline to prevent misconfigured YAML files from being deployed.
-- Linting is performed on all `.yaml` and `.yml` files before merging changes into the main branch.
+| Directory        | Description                                                     |
+| ---------------- | --------------------------------------------------------------- |
+| `monitoring/`     | Contains `docker-compose.yml`, `prometheus.yml`, and `config.yaml` for the monitoring stack (**Prometheus**, **Loki**, **Grafana**, **Uptime Kuma**). |
+| `semaphore/`      | Ansible/OpenTofu CI/CD UI stack. Includes `.env` files and compose config. |
 
-## 🔗 **Notes and Disclaimers**
+---
+
+## Notes and Disclaimers
 
 This project was developed with the primary goal of **storing infrastructure and configuration in Git**, automating as much as possible.
 
-- The **only configuration not stored in Git** is **Portainer’s `docker-compose.yaml`** .env, as it contains secrets. (a sample.env was given for example)
-- **TLS is not configured with Traefik**, as it was not within the project scope. However, it can be easily added later (possibly with **DuckDNS**).
+- The **only configuration not stored in Git** is **Portainer’s `docker-compose.yaml` .env**, as it contains secrets. (a `sample.env` is provided as a template)
+- **TLS is not configured with Traefik**, as it was out of project scope. This can be added later (e.g., with **DuckDNS**).
+- It is not recommended to use Flux directly on production all the time, you must have a staging cluster or space before taking changes to production, this is an exercise to practice GitOps principles
 
 ---
 
-## 💡 **Contributing & Advice**
+## Contributing & Advice
 
-Feel free to **use any part of this setup**, **share feedback**, or just **start a discussion** about improvements! 🚀
+Feel free to **use any part of this setup**, **share feedback**, or **open a discussion** on how to improve it further. Contributions and suggestions are always welcome!
 
 ---
 
-## 📄 **License**
+## License
 
 This project is licensed under the **MIT License**.
